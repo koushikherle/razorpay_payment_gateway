@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Laravel - Razorpay Payment Gateway Integration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <style>
+            .mt2{
+                margin-top: 2%;
+            }
+        </style>
+        <main class="py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 offset-3 col-md-offset-6">
+                        <div class="card card-default">
+                            <div class="card-body text-center">
+                                <div class="card-header">
+                                    Please enter the amount for which you want to make payment
+                                </div>
+                                <label class="form-control">Enter Amount for Razorpay Payment Demo</label>
+                                <form method="post" action="/payment">
+                                    @csrf
+                                    <input type="text" name="amount" id="amount" placeholder="RS 10" class="form-control"/>
+                                    <button type="submit" class="btn btn-primary mt2">Pay</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    @if(Session::has('data'))
+ 
+    <div class="container tex-center mx-auto">
+    <form action="/pay" method="POST" class="text-center mx-auto mt-5">
+      <script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          data-key="rzp_test_uyyV59TNJnTcpp"
+          data-amount="{{Session::get('data.amount')}}" 
+          data-currency="INR"
+          data-order_id="{{Session::get('data.order_id')}}"
+          data-buttontext="Pay with Razorpay"
+          data-name="Coffee"
+          data-description="Test transaction"       
+          data-theme.color="#F37254"
+      ></script>
+      <input type="hidden" custom="Hidden Element" name="hidden">
+      </form>
+
+    </div>
+    
+    @endif
+</body>
+</html>
